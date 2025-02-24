@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djangorestframework = "*"
+djangorestframework-simplejwt = "*"
+aiogram = "~=2.25.2"
+aiohttp = "~=3.8.6"
+django-crispy-forms = "*"
+channels = "*"
+channels-redis = "*"
+daphne = "*"
+whitenoise = "*"
+pillow = "*"
+gunicorn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

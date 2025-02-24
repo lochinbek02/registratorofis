@@ -1,0 +1,106 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block content1 %}
+<form method="POST" class="w-50 mx-auto mt-5 border p-4 rounded">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="firstName">Ism</label>
+        <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Ismingizni kiriting">
+    </div>
+    <div class="form-group">
+        <label for="lastName">Familiya</label>
+        <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Familiyangizni kiriting">
+    </div>
+    <div class="form-group">
+          <label for="phoneNumber">Telefon raqam</label>
+          <input type="text" name="phone" class="form-control" id="phoneNumber" placeholder="+998 XX XXX XX XX" maxlength="17">
+      </div>
+    <div class="form-group mt-2">
+      <label for="exampleFormControlSelect1">Xizmat turlaridan birini tanlang</label>
+     
+      <select class="form-control" name="service" id="exampleFormControlSelect1">
+        <option value="QR kodli diplom shakllantirish">QR kodli diplom shakllantirish</option>
+        <option value="Akademik ma'lumotnome va transkipt berish">Akademik ma'lumotnome va transkipt berish</option>
+        <option value="Akademik mobillik asosida boshqa oliy ta'lim muassasasiga ketgan talabalarni tegishli tartibda rasmiylashtirish">Akademik mobillik asosida boshqa oliy ta'lim muassasasiga ketgan talabalarni tegishli tartibda rasmiylashtirish</option>
+        <option value="Imtihonlar ro'yxatini shakllantirish va talabaga taqdim etish">Imtihonlar ro'yxatini shakllantirish va talabaga taqdim etish</option>
+        <option value="Talabaga o'zining GPA ko'rsatkichi haqida ma'lumotnoma taqdim etish">Talabaga o'zining GPA ko'rsatkichi haqida ma'lumotnoma taqdim etish</option>
+        <option value="Talaba uchun tegishli fanlardan shaxsiy grafik yaratish">Talaba uchun tegishli fanlardan shaxsiy grafik yaratish</option>
+        <option value="Talabalarni HEMIS platformasidan keyingi kursga o'tkazish">Talabalarni HEMIS platformasidan keyingi kursga o'tkazish</option>
+        <option value="Talabalarni parolini tiklash">Talabalarni parolini tiklash</option>
+        <option value="Talabalarning shaxsiy hamda o'quv ma'lumotlarini tahrirlash">Talabalarning shaxsiy hamda o'quv ma'lumotlarini tahrirlash</option>
+        <option value="Talabani bir guruhdan ikkinchi guruhga ko'chirib o'tkazish">Talabani bir guruhdan ikkinchi guruhga ko'chirib o'tkazish</option>
+        <option value="Qayta o'qishga shartnoma berish">Qayta o'qishga shartnoma berish</option>
+        <option value="Stipendiya to'g'risida ma'lumotnoma berish">Stipendiya to'g'risida ma'lumotnoma berish</option>
+        <option value="Talabalarga to'lov-shartnomasi olish uchun ariza berishga ko'maklashish">Talabalarga to'lov-shartnomasi olish uchun ariza berishga ko'maklashish</option>
+        <option value="To'lov-shartnoma summasi haqida ma'lumot berish">To'lov-shartnoma summasi haqida ma'lumot berish</option>
+        <option value="O'qishga qabul va o'qishni ko'chirish yuzasidan konsultatsiya berish">O'qishga qabul va o'qishni ko'chirish yuzasidan konsultatsiya berish</option>
+        
+      </select>
+    </div>
+    
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary btn-block mb-4 mt-2">Yuborish</button>
+  </div>
+  </form>
+
+  <script>
+    function capitalizeWords(input) {
+            return input.replace(/\b\w/g, function (char) {
+                return char.toUpperCase();
+            });
+        }
+
+        $("#firstName, #lastName").on("input", function () {
+            $(this).val(capitalizeWords($(this).val()));
+        });
+        $(document).ready(function () {
+    $("#phoneNumber").on("input", function (e) {
+        let value = $(this).val().replace(/\D/g, ""); // Faqat raqamlarni olish
+
+        // Agar foydalanuvchi hamma raqamlarni o‘chirsa, input bo‘sh qoladi
+        if (value === "") {
+            $(this).val("");
+            return;
+        }
+
+        // Faqat `998` bilan boshlansa, qolganini kiritishga ruxsat beramiz
+        if (!value.startsWith("998")) {
+            value = "998"; // Agar noto‘g‘ri yozilgan bo‘lsa, `998` ni qayta o‘rnatamiz
+        }
+
+        // Faqat kerakli uzunlikdagi raqamlarni saqlash
+        value = value.substring(0, 12);
+
+        // Agar raqam uzunligi noto‘g‘ri bo‘lsa, error ko‘rsatamiz
+        if (value.length > 3 && value.length < 12) {
+            $("#error-message").text("Raqam noto‘g‘ri kiritildi! To‘g‘ri format: +998 XX XXX XX XX");
+        } else {
+            $("#error-message").text(""); // Xatolik yo‘q bo‘lsa, xabarni yashiramiz
+        }
+
+        // Telefon raqamni formatlash
+        let formatted = "+998 ";
+        if (value.length > 3) formatted += value.substring(3, 5) + " ";
+        if (value.length > 5) formatted += value.substring(5, 8) + " ";
+        if (value.length > 8) formatted += value.substring(8, 10) + " ";
+        if (value.length > 10) formatted += value.substring(10, 12);
+
+        // Yangi qiymatni inputga joylash
+        $(this).val(formatted);
+
+        // Kursorning oxirgi joylashuvi noto‘g‘ri bo‘lmasligi uchun
+        let pos = formatted.length;
+        this.setSelectionRange(pos, pos);
+    });
+
+    // To‘liq inputni o‘chirish tugmachasi
+    $("#clearPhone").on("click", function () {
+        $("#phoneNumber").val("");
+        $("#error-message").text(""); // Xatolik xabarini ham tozalash
+    });
+});
+
+</script>
+{% endblock%}

@@ -1,0 +1,322 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container text-center" data-aos="zoom-out" data-aos-delay="100">
+      <h1>SamDU Registrator ofisi <span>Online Navbat</span></h1>
+      <h2>tizimidan quyidagi <span class="text-primary">samduinfo_bot </span> bot orqali ro'yxatdan o'ting</h2>
+      <br>
+      
+      
+      
+      <div class="">
+        <div class="task-info">
+            <h1><span class="task-title" id="task_title"></span> <span class="text-primary-emphasis" id="task_queue"></span></h1>
+        </div>
+    </div>
+      
+
+        
+      </div>
+      
+      <!-- <div class="d-flex">
+        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+      </div> -->
+    </div>
+    
+  </section><!-- End Hero -->
+
+
+
+
+
+
+
+
+
+
+  <!-- ======= Featured Services Section ======= -->
+  <section id="featured-services" class="featured-services">
+    <div class="container" data-aos="fade-up">
+      <div class="row">
+        <p class="text-center display-4">
+          <span class="text-info-emphasis">Registrator ofisi xizmatlaridan foydalanish uchun navbat oling</span>
+      </p>
+      
+      <form method="POST" >
+        {% csrf_token %}
+        <div class="container mt-4">
+          <div class="d-flex flex-column align-items-center text-center">
+            <p class="text-center text-primary fs-3 fw-bold" id="response_form"></p>
+            <img class="img-fluid w-75" id="generatedImage" style="display:none; margin-top:10px;" />
+          </div>
+          <div class="row g-2">
+              <div class="col-md-4">
+                  <button type="submit" name="QR kodli diplom shakllantirish" class="btn btn-primary w-100 equal-height">QR kodli diplom shakllantirish</button>
+              </div>
+              <div class="col-md-4">
+                  <button type="submit" name="Akademik ma'lumotnoma va transkipt berish" class="btn btn-primary w-100 equal-height">Akademik ma'lumotnoma va transkipt berish</button>
+              </div>
+              <div class="col-md-4">
+                  <button type="submit" name="Akademik mobillik asosida boshqa oliy ta'lim muassasasiga ketgan talabalarni tegishli tartibda rasmiylashtirish" class="btn btn-primary w-100 equal-height">Akademik mobillik asosida boshqa oliy ta'lim muassasasiga ketgan talabalarni tegishli tartibda rasmiylashtirish</button>
+              </div>
+              
+              <div class="col-md-4">
+                  <button type="submit" name="Imtihonlar ro'yxatini shakllantirish va talabaga taqdim etish" class="btn btn-primary w-100 equal-height">Imtihonlar ro'yxatini shakllantirish va talabaga taqdim etish</button>
+              </div>
+              <div class="col-md-4">
+                  <button type="submit" name="Talabaga o'zining GPA ko'rsatkichi haqida ma'lumotnoma taqdim etish" class="btn btn-primary w-100 equal-height">Talabaga o'zining GPA ko'rsatkichi haqida ma'lumotnoma taqdim etish</button>
+              </div>
+              <div class="col-md-4">
+                  <button type="submit" name="Talaba uchun tegishli fanlardan shaxsiy grafik yaratish" class="btn btn-primary w-100 equal-height">Talaba uchun tegishli fanlardan shaxsiy grafik yaratish</button>
+              </div>
+      
+              <div class="col-md-4">
+                  <button type="submit" name="Talabalarni HEMIS platformasidan keyingi kursga o'tkazish" class="btn btn-primary w-100 equal-height">Talabalarni HEMIS platformasidan keyingi kursga o'tkazish</button>
+              </div>
+          
+              <div class="col-md-4">
+                  <button type="submit" name="Talabalarni parolini tiklash" class="btn btn-primary w-100 equal-height">Talabalarni parolini tiklash</button>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" name="Talabalarning shaxsiy hamda o'quv ma'lumotlarini tahrirlash" class="btn btn-primary w-100 equal-height">Talabalarning shaxsiy hamda o'quv ma'lumotlarini tahrirlash</button>
+              </div>
+        
+              <div class="col-md-4">
+                <button type="submit" name="Talabani bir guruhdan ikkinchi guruhga ko'chirib o'tkazish" class="btn btn-primary w-100 equal-height">Talabani bir guruhdan ikkinchi guruhga ko'chirib o'tkazish</button>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" name="Qayta o'qishga shartnoma berish" class="btn btn-primary w-100 equal-height">Qayta o'qishga shartnoma berish</button>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" name="Stipendiya to'g'risida ma'lumotnoma berish" class="btn btn-primary w-100 equal-height">Stipendiya to'g'risida ma'lumotnoma berish</button>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" name="Talabalarga to'lov-shartnomasi olish uchun ariza berishga ko'maklashish" class="btn btn-primary w-100 equal-height">Talabalarga to'lov-shartnomasi olish uchun ariza berishga ko'maklashish</button>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" name="To'lov-shartnoma summasi haqida ma'lumot berish" class="btn btn-primary w-100 equal-height">To'lov-shartnoma summasi haqida ma'lumot berish</button>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" name="O'qishga qabul va o'qishni ko'chirish yuzasidan konsultatsiya berish" class="btn btn-primary w-100 equal-height">O'qishga qabul va o'qishni ko'chirish yuzasidan konsultatsiya berish</button>
+              </div>
+              <div class=" w-50 mx-auto rounded">
+                <button type="submit" name="Boshqa xizmatlar" class="btn btn-primary w-100 equal-height">Boshqa xizmatlar</button>
+              </div>
+          </div>
+          
+      </form>
+    </div>
+        <!-- <form method="POST" class="w-50 mx-auto mt-5 border p-4 rounded">
+          {% csrf_token %}
+          
+          <div class="form-group">
+              <label for="firstName">Ism</label>
+              <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Ismingizni kiriting">
+          </div>
+          <div class="form-group">
+              <label for="lastName">Familiya</label>
+              <input type="text" name="lastname" class="form-control" id="lastName" placeholder="Familiyangizni kiriting">
+          </div>
+          <div class="form-group">
+                <label for="phoneNumber">Telefon raqam</label>
+                <input type="text" name="phone" class="form-control" id="phoneNumber" placeholder="+998 XX XXX XX XX" maxlength="17">
+            </div>
+          <div class="form-group mt-2">
+            <label for="exampleFormControlSelect1">Xizmat turlaridan birini tanlang</label>
+           
+            <select class="form-control" name="service" id="exampleFormControlSelect1">
+              <option value=""></option>
+              <option value="QR kodli diplom shakllantirish">QR kodli diplom shakllantirish</option>
+              <option value="Akademik ma'lumotnome va transkipt berish">Akademik ma'lumotnome va transkipt berish</option>
+              <option value="Akademik mobillik asosida boshqa oliy ta'lim muassasasiga ketgan talabalarni tegishli tartibda rasmiylashtirish">Akademik mobillik asosida boshqa oliy ta'lim muassasasiga ketgan talabalarni tegishli tartibda rasmiylashtirish</option>
+              <option value="Imtihonlar ro'yxatini shakllantirish va talabaga taqdim etish">Imtihonlar ro'yxatini shakllantirish va talabaga taqdim etish</option>
+              <option value="Talabaga o'zining GPA ko'rsatkichi haqida ma'lumotnoma taqdim etish">Talabaga o'zining GPA ko'rsatkichi haqida ma'lumotnoma taqdim etish</option>
+              <option value="Talaba uchun tegishli fanlardan shaxsiy grafik yaratish">Talaba uchun tegishli fanlardan shaxsiy grafik yaratish</option>
+              <option value="Talabalarni HEMIS platformasidan keyingi kursga o'tkazish">Talabalarni HEMIS platformasidan keyingi kursga o'tkazish</option>
+              <option value="Talabalarni parolini tiklash">Talabalarni parolini tiklash</option>
+              <option value="Talabalarning shaxsiy hamda o'quv ma'lumotlarini tahrirlash">Talabalarning shaxsiy hamda o'quv ma'lumotlarini tahrirlash</option>
+              <option value="Talabani bir guruhdan ikkinchi guruhga ko'chirib o'tkazish">Talabani bir guruhdan ikkinchi guruhga ko'chirib o'tkazish</option>
+              <option value="Qayta o'qishga shartnoma berish">Qayta o'qishga shartnoma berish</option>
+              <option value="Stipendiya to'g'risida ma'lumotnoma berish">Stipendiya to'g'risida ma'lumotnoma berish</option>
+              <option value="Talabalarga to'lov-shartnomasi olish uchun ariza berishga ko'maklashish">Talabalarga to'lov-shartnomasi olish uchun ariza berishga ko'maklashish</option>
+              <option value="To'lov-shartnoma summasi haqida ma'lumot berish">To'lov-shartnoma summasi haqida ma'lumot berish</option>
+              <option value="O'qishga qabul va o'qishni ko'chirish yuzasidan konsultatsiya berish">O'qishga qabul va o'qishni ko'chirish yuzasidan konsultatsiya berish</option>
+              
+            </select>
+          </div>
+          
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-block mb-4 mt-2">Yuborish</button>
+          <p class="text-center text-primary" id="response_form"></p>
+          <img id="generatedImage" style="display:none; margin-top:10px;" />
+        </div>
+
+        </form> -->
+      </div>
+
+    </div>
+  </section><!-- End Featured Services Section -->
+
+
+
+
+
+
+    <section id="about" class="about section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+            <p class="text-center display-4">
+                <span class="text-primary-emphasis">Registratsiya ofisi haqida</span>
+            </p>
+            <p class="text-center fs-5">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae consequuntur asperiores sit hic similique? Nam a molestiae accusantium maiores nihil perspiciatis odio, quis ratione. Aspernatur nihil accusamus optio pariatur excepturi impedit dolor quae fugit assumenda neque enim tempora eos voluptatum ipsam et illum, quis ab voluptatibus culpa beatae quaerat repellat. Fugiat, tenetur voluptatibus? Dicta voluptas tempore magni, fugit obcaecati odit asperiores architecto praesentium fuga explicabo illo distinctio ad ab! Ab minus magni, ipsum, debitis magnam, corrupti ea quas obcaecati dicta eum mollitia explicabo repellendus illum veniam quibusdam perspiciatis. Consequuntur doloribus vel aperiam accusamus autem dolorum temporibus, saepe nostrum deleniti iusto?
+            </p>
+        </div>
+
+      </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("form").submit(function (event) {
+                event.preventDefault();  // Formani standart jo‘natishni to‘xtatamiz
+    
+                let buttonName = $(document.activeElement).attr("name");  // Bosilgan button nomini olish
+
+                let formData = {
+                    service: buttonName,  // Bosilgan tugma nomini yuboramiz
+                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val() // CSRF tokenni qo‘shamiz
+                };  // Bosilgan tugma nomini olish
+                // let formData = {
+                //     firstname: $("#firstName").val(),
+                //     lastname: $("#lastName").val(),
+                //     phone: $("#phoneNumber").val(),
+                //     service: $("#exampleFormControlSelect1").val(),
+                //     csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val() // CSRF tokenni qo‘shamiz
+                // };
+    
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'home_save' %}",  
+                    data: formData,
+                    success: function (response) {
+                      console.log(response)
+                      $('#response_form').empty(); 
+                      $('#response_form').append(`<span class="text-success">${response.message}</span>`);  
+
+                      $("form")[0].reset();  
+
+                      // Rasmni chiqarish
+                      if (response.image) {
+                          $("#generatedImage")
+                              .attr("src", response.image)
+                              .removeClass("d-none") // Agar Bootstrap `d-none` classi bo‘lsa, olib tashlaymiz
+                              .css({ display: "block", width: "auto", height: "auto" }); // To'g'ri o‘lchamda chiqarish
+                      }
+
+                      // 5 soniyadan keyin xabar va rasmni o‘chirish
+                      setTimeout(function () {
+                          $('#response_form').fadeOut('slow', function () {
+                              $(this).empty().css("display", "block"); // Divni tozalab, yana ko‘rinadigan qilamiz
+                          });
+
+                          $("#generatedImage").fadeOut('slow', function () {
+                              $(this).attr("src", "")
+                                  .addClass("d-none") // Bootstrap orqali butunlay yashiramiz
+                                  .removeAttr("style"); // Barcha inline stillarni olib tashlaymiz
+                          });
+                      }, 5000);
+
+                         // Muvaffaqiyatli javob
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Xatolik yuz berdi: " + error);
+                        setTimeout(function () {
+                        $('#response_form').fadeOut('slow', function () {
+                            $(this).empty().show(); // Divni tozalab, yana ko‘rinadigan qilamiz
+                        });
+                        
+                    }, 5000);
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <script>
+      console.log("WebSocket boshlanmoqda:", window.location.host);
+      const socket = new WebSocket("ws://" + window.location.host + "/ws/task-updates/");
+  
+      document.addEventListener("DOMContentLoaded", function () {
+          socket.onmessage = function (event) {
+              const data = JSON.parse(event.data);
+              console.log("WebSocket ma'lumot oldi:", data.new_task);
+  
+              // Ma'lumotni qo'shish uchun elementni olish
+              const taskTitleElement = document.getElementById("task_title");
+              const task_queueElement = document.getElementById("task_queue");
+              
+              if (!taskTitleElement) {
+                  console.error("Xatolik: #task_title elementi topilmadi!");
+                  return;
+              }
+              if (!task_queueElement) {
+                  console.error("Xatolik: #task_queue elementi topilmadi!");
+                  return;
+              }
+  
+              // Agar `service` mavjud bo'lsa, qo'shib qo'yamiz
+              
+              if (data.service) {
+                  taskTitleElement.innerHTML +=data.service;
+              }
+              if (data.id) {
+              
+                if (data.service[0]=="📋"){
+                  task_queueElement.innerHTML +=data.service[2]+data.id;
+                }
+                else{
+                  taskTitleElement.innerHTML +=data.service[0]+data.id;
+                }
+                  
+
+              }
+              
+              // Agar `message` mavjud bo'lsa, ekranga chiqaramiz
+              if (data.message) {
+                task_queueElement.innerText = data.message;
+              }
+              if(data.new_task==null){
+                taskTitleElement.innerHTML =''
+              }
+              // Agar yangi vazifa mavjud bo'lsa, ekranga chiqaramiz
+              if (data.new_task) {
+                  taskTitleElement.innerText = data.new_task.service;
+                  // console.log(data.new_task.service)
+                  if (/^[A-Za-z]$/.test(data.new_task.service[0])){
+                    task_queueElement.innerText=data.new_task.service[0]+data.new_task.id;
+                  }
+                  else{
+                    // console.log(data.new_task.service[2])
+                    task_queueElement.innerText=data.new_task.service[2]+data.new_task.id;
+
+                  }
+
+                  
+              }
+              
+          };
+      });
+  </script>
+  
+  
+  
+  
+
+  
+{%endblock%}

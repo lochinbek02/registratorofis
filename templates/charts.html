@@ -1,0 +1,74 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block content %}
+
+
+    <div class="container mt-4">
+        <h3 class="text-center mb-4">Statistik Diagrammalar</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h6 class="text-center">Umumiy Statistikalar</h6>
+                    <div class="chart-container">
+                        <canvas id="totalStatsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h6 class="text-center">Oylik Statistikalar</h6>
+                    <div class="chart-container">
+                        <canvas id="monthlyStatsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="card p-3">
+                <h6 class="text-center">Yillik Statistikalar</h6>
+                <div class="chart-container">
+                    <canvas id="yearlyStatsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        fetch("http://127.0.0.1:8000/api/statistics/")
+            .then(response => response.json())
+            .then(data => {
+                const createChart = (ctx, type, labels, datasets) => {
+                    new Chart(ctx, { type, data: { labels, datasets }, options: { responsive: true, maintainAspectRatio: false } });
+                };
+
+                createChart(document.getElementById("totalStatsChart").getContext("2d"), "doughnut",
+                    ["Umumiy", "Bajarilgan", "Bekor qilingan", "Kelmagan"],
+                    [{ data: Object.values(data.total_counts), backgroundColor: ["#3498db", "#2ecc71", "#e74c3c", "#f1c40f"] }]
+                );
+
+                createChart(document.getElementById("monthlyStatsChart").getContext("2d"), "line",
+                    data.monthly_data.labels,
+                    ["general", "completed", "cancelled", "not_come"].map((key, i) => ({
+                        label: key.charAt(0).toUpperCase() + key.slice(1),
+                        data: data.monthly_data[key],
+                        borderColor: ["#4bc0c0", "#ff6384", "#ffce56", "#9966ff"][i],
+                        fill: true
+                    }))
+                );
+                createChart(document.getElementById("yearlyStatsChart").getContext("2d"), "line",
+                    data.yearly_data.labels,
+                    [{
+                        label: "Yillik umumiy statistika",
+                        data: data.yearly_data.general,
+                        borderColor: "#ff6384",
+                        backgroundColor: "rgba(255, 99, 132, 0.2)",
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                );
+            })
+            .catch(error => console.error("Ma’lumotni yuklashda xatolik:", error));
+    </script>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+
+
+{% block content %}
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-end mb-2">
+        {% if task %}
+        <button class="btn btn-danger complete-task">
+            <a class="text-light" href="{% url 'complete_work' task.id %}">Ishni yakunlash</a>
+        </button>
+
+        {% endif %}
+    </div>
+    
+    <h2>Tushgan murojaatlar</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ismi</th>
+                <th>Familiyasi</th>
+                <th>Xizmat turi</th>
+                <th>Telifon raqami</th>
+            </tr>
+        </thead>
+        <tbody id="task-table" class="text-center">
+            {% if task %}
+            <tr>
+                <td id="lastname">{{ task.lastname }}</td>
+                <td id="firstname">{{ task.firstname }}</td>                
+                <td id="service">{{ task.service }}</td>
+                <td id="phone">{{ task.phone }}</td>
+                <!-- <a class="nav-link scrollto" href="{% url 'application' %}">Application</a> -->
+                <td><button class="btn btn-success complete-task" data-action="complete" data-task-id="{{ task.id }}">Bajarildi</button></td>
+                <td><button class="btn btn-danger complete-task" data-action="cancelled" data-task-id="{{ task.id }}">Bajarilmadi</button></td>
+                <td><button class="btn btn-warning complete-task" data-action="notcome" data-task-id="{{ task.id }}">Kelmagan</button></td>
+
+                
+                <!-- <td><button class="btn btn-success complete-task" data-task-id="{{ task.id }}">Bajarildi</button></td> -->
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" class="text-center">Sizga hozircha ish yo'q</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+    $(".complete-task").click(function (event) {
+        event.preventDefault(); // Sahifa qayta yuklanishining oldini olamiz
+
+        let button = $(this);
+        let taskId = button.attr("data-task-id"); // Task ID ni olamiz
+        let action = button.attr("data-action"); // Qaysi tugma bosilganligini aniqlaymiz
+        let actionUrl = "";
+
+        console.log("Tugma bosildi:", button);
+        console.log("Task ID:", taskId);
+        console.log("Action:", action);
+
+        // Agar Task ID yoki Action yo'q bo'lsa, xatolikni ko'rsatamiz
+        if (!taskId || !action) {
+            alert("Xatolik: Task ID yoki Action topilmadi!");
+            return;
+        }
+
+        // Bosilgan tugmaga qarab URL aniqlash
+        if (action === "complete") {
+            actionUrl = `/api/complete_task/${taskId}/`; // **API endpointini to'g'ri yozish**
+        } else if (action === "cancelled") {
+            actionUrl = `/api/cancelled_task/${taskId}/`;
+        } else if (action === "notcome") {
+            actionUrl = `/api/notcome_task/${taskId}/`;
+        }
+
+        // AJAX orqali backendga so‘rov yuborish
+        $.ajax({
+            url: actionUrl,
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}", // CSRF token himoyasi uchun
+            },
+            success: function (response) {
+                // alert("Status yangilandi!"); // Foydalanuvchiga xabar chiqarish
+                location.reload(); // Faqat sahifani yangilash
+            },
+            error: function (xhr, status, error) {
+                console.log("Xatolik:", error);
+                alert("Xatolik yuz berdi! Iltimos, qayta urinib ko‘ring.");
+            }
+        });
+    });
+});
+
+</script>
+{% endblock %}
